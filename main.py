@@ -3,6 +3,18 @@ import ecdsa
 import base58
 import requests
 
+# definindo os parametros da curva elíptica (secp256k1)
+p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+a = 0
+b = 7
+Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
+Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
+
+# criando uma curva
+curve = ecdsa.ellipticcurve.CurveFp(p, a, b)
+generator = ecdsa.ellipticcurve.Point(curve, Gx, Gy, n)
+
 def generate_private_key():
     # gerando a chave privada "aleatoriamente" entre um intervalo [1, n]
     return ecdsa.util.randrange(1, n)
