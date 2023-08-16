@@ -19,3 +19,9 @@ def generate_bitcoin_address(public_key):
     checksum = sha256(sha256(address_bytes).digest()).digest()[:4]
     bitcoin_address = base58.b58encode(address_bytes + checksum).decode("utf-8")
     return bitcoin_address
+
+def check_address_in_blockchain(address):
+    url = f"https://blockchain.info/q/addressbalance/{address}"
+    response = requests.get(url)
+    balance = int(response.text)
+    return balance > 0
