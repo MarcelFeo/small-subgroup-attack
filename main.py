@@ -25,3 +25,25 @@ def check_address_in_blockchain(address):
     response = requests.get(url)
     balance = int(response.text)
     return balance > 0
+
+def main():
+    num_keys_to_generate = 1000
+    subgroup_attack_addresses = []
+
+    for _ in range(num_keys_to_generate):
+        private_key = generate_private_key()
+        public_key = generate_public_key(private_key)
+        bitcoin_address = generate_bitcoin_address(public_key)
+
+        if check_address_in_blockchain(bitcoin_address):
+            subgroup_attack_addresses.append((private_key, public_key, bitcoin_address))
+
+    print("Subgroup Attack Addresses:")
+    for private_key, public_key, bitcoin_address in subgroup_attack_addresses:
+        print(f"Private Key: {private_key}")
+        print(f"Public Key: {public_key}")
+        print(f"Bitcoin Address: {bitcoin_address}")
+        print()
+
+if __name__ == "__main__":
+    main()
